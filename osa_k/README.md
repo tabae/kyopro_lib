@@ -4,7 +4,7 @@
 
 $N$個の整数$a_1, a_2, ..., a_n$を素因数分解せよ．
 - $2 \leq n \leq 10^6$
-- $1 \leq i \leq 10^6$
+- $1 \leq a_i \leq 10^6$
 
 ## 計算量
 - 前処理 $O(max(a)log\ log\ max(a))$
