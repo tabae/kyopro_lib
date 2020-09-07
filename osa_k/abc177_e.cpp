@@ -13,41 +13,39 @@ typedef long long ll;
 ll d1[4] = {1, -1, 0, 0};
 ll d2[4] = {0, 0, 1, -1};
 
-typedef struct fast_prime_factorization {
+/* --------- ここから --------- */
+using ll = long long;
 
-    ll PRIME_FACTORIZE_MAX;
-    vector<ll> primes;
+#define PRIME_FACTORIZE_MAX 2000010
+ll primes[PRIME_FACTORIZE_MAX];
 
-    void erathos() {
-        for(ll i = 2; i <= PRIME_FACTORIZE_MAX; i++) {
-            if(primes[i] != 1) continue;
-            for(ll j = i; j <= PRIME_FACTORIZE_MAX; j += i) {
-                primes[j] = i;
-            }
+void pre_osa_k() {
+    for(ll i = 0; i < PRIME_FACTORIZE_MAX; i++) {
+        primes[i] = 1;
+    }
+    for(ll i = 2; i < PRIME_FACTORIZE_MAX; i++) {
+        if(primes[i] != 1) continue;
+        for(ll j = i; j <= PRIME_FACTORIZE_MAX; j += i) {
+            primes[j] = i;
         }
     }
+}
 
-    fast_prime_factorization(ll _NMAX) : PRIME_FACTORIZE_MAX(_NMAX) {
-        primes.resize(PRIME_FACTORIZE_MAX, 1);
-        erathos();
-    }
-
-    vector<pair<ll,ll>> factorize(ll n){
-        vector<pair<ll,ll>> res;
-        while(n != 1) {
-            ll cur = primes[n];
-            ll cnt = 0;
-            while(n % cur == 0) {
-                n /= cur;
-                cnt++;
-            }
-            res.push_back({cur, cnt});
+vector<pair<ll,ll>> factorize(ll n){
+    vector<pair<ll,ll>> res;
+    while(n != 1) {
+        ll cur = primes[n];
+        ll cnt = 0;
+        while(n % cur == 0) {
+            n /= cur;
+            cnt++;
         }
-        return res;
+        res.push_back({cur, cnt});
     }
-    
-} osa_k;
-
+    reverse(res.begin(), res.end());
+    return res;
+}
+/* --------- ここまで --------- */
 
 ll gcd(ll a, ll b){
     if(a < b) return gcd(b, a);
@@ -72,9 +70,9 @@ int main(){
     rep(i, 0, n) cin >> a[i];
     bool pair_wise = true;
     set<ll> seen;
-    osa_k p(1000010);
+    pre_osa_k();
     rep(i, 0, n) {
-        auto v = p.factorize(a[i]);
+        auto v = factorize(a[i]);
         for(auto e : v) {
             if(seen.count(e.first)) {
                 pair_wise = false;
