@@ -1,0 +1,21 @@
+#!/bin/bash
+
+name=generated_template_dir
+src=/mnt/c/Users/Ebata/OneDrive/競プロ/template.cpp
+
+if [ $# -eq 1 ]; then
+    if [ $1 = "--help" ]; then
+        echo "mktemp <directory name>"
+        exit
+    else
+        name=$1
+    fi
+fi
+
+mkdir ${name}
+cd ${name}
+for dir in a b c d e f g h i j k l m n o p q r s t u v w x y z
+do
+    mkdir ${dir}
+    cp ${src} ./${dir}/main.cpp
+done
