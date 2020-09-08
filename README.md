@@ -1,11 +1,13 @@
 # kyopro_lib
 Libraries for competitive programming
 
-## osa_k
-osa_k法（高速素因数分解）
+## graph
+グラフ系。
+- Dijkstra
 
-## gentemp
-テンプレートディレクトリ作成
+## math
+数学系。
+- osa_k
 
-## aclopen
-ACL展開
+## utils
+ちょっとしたスクリプト。
