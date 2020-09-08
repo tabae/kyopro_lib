@@ -2,28 +2,28 @@
 using namespace std;
 
 /* --------- ここから --------- */
-using ll = long long;
+using _ll = long long;
 
 #define PRIME_FACTORIZE_MAX 2000010
-ll primes[PRIME_FACTORIZE_MAX];
+_ll primes[PRIME_FACTORIZE_MAX];
 
 void pre_osa_k() {
-    for(ll i = 0; i < PRIME_FACTORIZE_MAX; i++) {
+    for(_ll i = 0; i < PRIME_FACTORIZE_MAX; i++) {
         primes[i] = 1;
     }
-    for(ll i = 2; i < PRIME_FACTORIZE_MAX; i++) {
+    for(_ll i = 2; i < PRIME_FACTORIZE_MAX; i++) {
         if(primes[i] != 1) continue;
-        for(ll j = i; j <= PRIME_FACTORIZE_MAX; j += i) {
+        for(_ll j = i; j <= PRIME_FACTORIZE_MAX; j += i) {
             primes[j] = i;
         }
     }
 }
 
-vector<pair<ll,ll>> factorize(ll n){
-    vector<pair<ll,ll>> res;
+vector<pair<_ll,_ll>> factorize(_ll n){
+    vector<pair<_ll,_ll>> res;
     while(n != 1) {
-        ll cur = primes[n];
-        ll cnt = 0;
+        _ll cur = primes[n];
+        _ll cnt = 0;
         while(n % cur == 0) {
             n /= cur;
             cnt++;
