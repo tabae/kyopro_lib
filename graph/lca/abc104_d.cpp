@@ -57,7 +57,7 @@ namespace lca {
 
         /* If there is the node "a" on the path from u to v */
         bool is_on_path(_ll u, _ll v, _ll a) {
-            return (get_dist(u, a) == get_dist(v, a));
+            return (get_dist(u, a) + get_dist(a, v) == get_dist(u, v));
         }
     } lca;
 }
