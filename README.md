@@ -10,5 +10,6 @@ Libraries for competitive programming
 ## math
 - osa_k
 - mod_utils
+- matrix
 
 ## utils
