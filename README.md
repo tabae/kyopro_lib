@@ -2,12 +2,13 @@
 Libraries for competitive programming
 
 ## graph
-グラフ系。
-- Dijkstra
+- dijkstra
+- kruskal
+- lca
+- centroid
 
 ## math
-数学系。
 - osa_k
+- mod_utils
 
 ## utils
-ちょっとしたスクリプト。
