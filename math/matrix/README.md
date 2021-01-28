@@ -22,3 +22,8 @@ a x b を返す．
 
 ### `matrix<T> matPow(matrix<T> a, ll p)`
 a ^ p を返す．O(log p)
+
+
+## サンプルコード
+
+- AOJ Fibonacci Number: ./sample.cpp
