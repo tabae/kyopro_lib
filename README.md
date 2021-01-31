@@ -11,5 +11,6 @@ Libraries for competitive programming
 - osa_k
 - mod_utils
 - matrix
+- poly
 
 ## utils
