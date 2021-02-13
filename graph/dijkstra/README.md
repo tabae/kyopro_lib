@@ -28,6 +28,23 @@ dijkstra(dist, maze, initial_pos);
     - first : h方向（i方向）
     - second : w方向 (j方向)
 
+## 使い方（経路復元）
+```
+auto [dist, from] res = dijkstra(G, initial_pos);
+auto route = path(from, start, goal);
+```
+- `vector<vector<pair<ll,ll>>> G` : 隣接リスト
+    - first : 頂点のインデックス
+    - second : 移動コスト
+- `ll initial_pos` : 初期位置のインデックス
+- 返り値(`pair<vector<ll>, vector<ll>>`)
+    - first : initial_posからの距離
+    - second : 各頂点にどこから来たか
+- `ll start, goal`: 復元する経路の始点と終点
+    - start は initial_posと同一
+    - goalは到達可能である必要あり
+- `vector<ll> route` :startからgoalまでの経路
+
 ## 注意
 ともに0-index。
 
