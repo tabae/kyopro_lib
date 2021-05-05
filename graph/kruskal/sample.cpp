@@ -1,131 +1,125 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
 
-/*---------------ここから---------------*/
 namespace kruskal {
 
     using ll = long long;
-
-    typedef struct union_find {
-
-        std::vector<ll> parent;
-        std::vector<ll> nums;
-        
-        union_find(ll n) {
+    using pl = std::pair<ll, ll>;
+    
+    struct union_find {
+    public:
+        union_find(int _n) : n(_n), group(_n) {
             parent.resize(n);
-            nums.resize(n, 1LL);
-            for(ll i = 0; i < n; i++) parent[i] = i;
+            nums.resize(n, 1);
+            iota(parent.begin(), parent.end(), 0);
         }
-        
-        ll root(ll x) {
+        int root(int x) {
             if(parent[x] == x) return x;
             parent[x] = root(parent[x]);
             return parent[x];
         }
-        
-        void unite(ll x, ll y) {
-            ll rx = root(x);
-            ll ry = root(y);
+        // Merge y to x
+        void merge(int x, int y) {
+            int rx = root(x);
+            int ry = root(y);
             if(rx != ry){
-                parent[rx] = ry;
-                nums[ry] += nums[rx];
+                group--;
+                parent[ry] = rx;
+                nums[rx] += nums[ry];
             }
         }
-        
-        bool same(ll x, ll y) {
-            ll rx = root(x);
-            ll ry = root(y);
-            if(rx == ry) return true;
-            return false;
+        bool same(int x, int y) {
+            return (root(x) == root(y));
         }
-        
-        ll size(ll x) {
+        int size() {
+            return group;
+        }
+        int size(int x) {
             return nums[root(x)];
         }
+    private:
+        int n, group;
+        std::vector<int> parent;
+        std::vector<int> nums;
+    };  
 
-    } uf;
+    struct edge {
+        ll v1, v2, cost, id;
+    };
 
-    typedef struct EdgeInfo {
-        ll cost, u, v, id;
-        EdgeInfo() {;};
-        EdgeInfo(ll _cost, ll _u, ll _v, ll _id) : cost(_cost), u(_u), v(_v), id(_id) {};    
-        ~EdgeInfo() {;};
-    } edge;
-    bool operator<(const edge& t1, const edge& t2) { return (t1.cost < t2.cost); };
-    bool operator>(const edge& t1, const edge& t2) { return (t1.cost > t2.cost); };
-    bool operator<=(const edge& t1, const edge& t2) { return (t1.cost <= t2.cost); };
-    bool operator>=(const edge& t1, const edge& t2) { return (t1.cost >= t2.cost); };
-
-    typedef struct krus {
-
-        ll N, M; // N: #nodes, M: #edges
-        std::vector<edge> E;
-        std::vector<ll> used_edges;
-        ll cost;
-
-        krus(ll _N) : N(_N), cost(-1) {;}
-
-        void add(ll cost, ll u, ll v, ll id) {
-            E.push_back(edge(cost, u, v, id));
+    struct mst {
+    public:
+        mst(int _n) : n(_n), build_cost(-1) {}
+        void add_edge(int v1, int v2, int cost) {
+            edges.push_back(edge{v1, v2, cost, (ll)edges.size()});
+        } 
+        void add_edge(int v1, int v2, int cost, int id) {
+            edges.push_back(edge{v1, v2, cost, id});
         }
-
-        void add(ll cost, ll u, ll v) {
-            ll id = E.size();
-            E.push_back(edge(cost, u, v, id));
-        }
-
         ll build() {
-            uf t(N);
-            cost = 0;
-            used_edges.clear();
-            std::sort(E.begin(), E.end());
-
-            for(auto e : E) {
-                if(!t.same(e.u, e.v)) {
-                    t.unite(e.u, e.v);
-                    cost += e.cost;
-                    used_edges.push_back(e.id);
-                }
+            union_find uf(n);
+            ll cost = 0;
+            auto copied_edges = edges;
+            sort(copied_edges.begin(), copied_edges.end(), [](const auto& l, const auto& r) {
+                return l.cost < r.cost;
+            });
+            for(auto e : copied_edges) {
+                if(uf.same(e.v1, e.v2)) continue;
+                uf.merge(e.v1, e.v2);
+                cost += e.cost;
+                used_edges.push_back(e.id);
             }
-
+            build_cost = cost;
             return cost;
         }
-
         ll get_cost() {
-            if(cost == -1) build();
-            return cost;
+            if(build_cost == -1) build();
+            return build_cost;
         }
-
-        edge get_edge(ll i) {
-            return E[i];
+        std::vector<std::vector<pl>> get_tree() {
+            if(build_cost == -1) build();
+            std::vector<std::vector<pl>> G(n);
+            for(auto e : used_edges) {
+                G[edges[e].v1].push_back({edges[e].v2, edges[e].cost});
+                G[edges[e].v2].push_back({edges[e].v1, edges[e].cost});
+            }
+            return G;
         }
-
         std::vector<ll> get_used_edges() {
-            if(cost == -1) build();
+            if(build_cost == -1) build();
             return used_edges;
         }
+    private:
+        int n; // # of verticies
+        ll build_cost;
+        std::vector<edge> edges;
+        std::vector<ll> used_edges;
+    };
 
-    } krus;
-}
-/*---------------ここまで---------------*/
-
-typedef struct town { int x, y, id; } town;
-
-int main(){
-    int n;
-    std::cin >> n;
-    std::vector<town> t(n);
-
-    for(int i = 0; i < n; i++) {
-        std::cin >> t[i].x >> t[i].y;
-        t[i].id = i;
+    mst make_mst(const std::vector<std::vector<pl>>& G) {
+        int n = G.size();
+        mst t(n);
+        for(int i = 0; i < n; i++) {
+            for(auto e : G[i]) {
+                t.add_edge(i, e.first, e.second);
+            }
+        }
+        return t;
     }
+};
 
-    kruskal::krus k(n);
-    sort(t.begin(), t.end(), [](auto l, auto r) {return l.x < r.x;});
-    for(int i = 0; i < n-1; i++) k.add(t[i+1].x-t[i].x, t[i+1].id, t[i].id);
-    sort(t.begin(), t.end(), [](auto l, auto r) {return l.y < r.y;});
-    for(int i = 0; i < n-1; i++) k.add(t[i+1].y-t[i].y, t[i+1].id, t[i].id);
-    
-    std::cout << k.build() << std::endl;
-    return 0;
+int main(){ 
+    int n, m;
+    std::cin >> n >> m;
+    std::vector<std::vector<std::pair<long long, long long>>> G(n);
+    for(int i = 0; i < m; i++) {
+        int s, t, w;
+        std::cin >> s >> t >> w;
+        G[s].push_back({t, w});
+        G[t].push_back({s, w});
+    }
+    auto MST = kruskal::make_mst(G);
+    std::cout << MST.get_cost() << std::endl;
 }
