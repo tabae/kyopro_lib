@@ -11,6 +11,9 @@ vector<ll> path = dijkstra::restore(res.second, start, goal);
 ```
 
 ## dijkstra::search
+```
+pair<vector<ll>, vector<ll>> dijkstra::search(vector<vector<ll>> G, ll initial_pos)
+```
 Input:
 - `vector<vector<pair<ll,ll>>> G`: 隣接リスト
 - `ll initial_pos`: 始点
@@ -20,8 +23,11 @@ Output:
 - `vector<ll> res.second`: 経路情報．各頂点にどこから来たのか.
 
 ## dijkstra::restore
+```
+vector<ll> dijkstra::restore(vector<ll> res.second, ll start, ll goal)
+```
 Input:
-- `vector<ll> res.second`: 上述
+- `vector<ll> res.second`: dijkstra::searchの戻り値のsecond．
 - `ll start`: 始点
 - `ll goal`: 終点
 
@@ -29,7 +35,7 @@ Input:
 - `goal`が到達可能であること(`res.second[goal] != dijkstra::inf`)．
 
 Output:
-- `vector<ll> path`: 経路
+- `vector<ll> path`: `start`から`goal`までの最短経路
 
 ## 注意
 - ともに0-indexed．
