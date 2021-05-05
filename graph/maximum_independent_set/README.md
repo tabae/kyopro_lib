@@ -1,5 +1,7 @@
 # 最大独立集合
 
+最大独立集合を一つ返します．
+
 ## 使い方
 ```
 vector<int> mis = max_independent_set(G);
@@ -12,7 +14,7 @@ Input:
 - `vector<vector<int>> G`: 隣接リスト
 
 Output:
-最大独立集合を一つ返します．
+- 最大独立集合を一つ返します．
 
 ## 注意
 - 0-indexedです．
