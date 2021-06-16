@@ -1,35 +1,44 @@
 # LCA
 
 ## 機能
-木でLCAを見つける
+- LCA (最小共通祖先)
 
 ## 使い方
+```
+lca t(G, root);
+int lca_uv = t.get_lca(u, v);
+int d_uv = t.get_dist(u, v);
+bool f = t.is_on_path(u, v, x);
+```
 
-### コンストラクタ
+## コンストラクタ
 ```
-lca::lca t(vector<vector<lca::edge>> G, ll root);
+lca t(vector<vector<T>> &G, int root);
 ```
-- G: 隣接リスト，`lca::edge`はデフォルトで`ll`.
+Input:
+- vector<vector<T>> G: 隣接リスト．`T`は整数型．
 - root: 根．デフォルトで0．
 
-### `get_lca()`
+## get_lca()
 ```
-ll x = t.get_lca(ll u, ll v);
+int get_lca(int u, int v);
 ```
-- u, vのLCAを返す
+頂点`u`と`v`のLCAを返す
 
-### `get_dist()`
+## get_dist()
 ```
-ll d = t.get_dist(ll u, ll v);
+int get_dist(int u, int v);
 ```
-- u, v 間の距離を返す
+頂点`u`と`v`間の距離を返す．現在は辺の長さ1のみに対応
 
-### `is_on_path()`
+## is_on_path()
 ```
-bool f = t.is_on_path(ll u, ll v, ll a);
+bool is_on_path(int u, int v, int a);
 ```
-- u -> vのパスに頂点aが存在するか？
+頂点`u`と`v`の最短経路に頂点`a`が存在するかを判定する．
 
-## Samples
-- AOJ GRL_5_C - Lowest Common Ancestor: ./sample.cpp
-- ABC104 D - 閉路: ./abc104_d.cpp
+## Reference
+- https://algo-logic.info/lca/
+
+## Verify
+- https://judge.yosupo.jp/submission/50582

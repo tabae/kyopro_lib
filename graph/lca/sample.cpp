@@ -1,92 +1,70 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 
-
-/*---------------------　ここから ------------------------*/
-namespace lca {
-
-    /* Reference: https://algo-logic.info/lca/ */
-
-    using _ll = long long;
-    typedef _ll edge;
-
-    typedef struct lca {
-        std::vector<std::vector<_ll>> parent;
-        std::vector<_ll> dist;
-
-        void dfs(std::vector<std::vector<edge>> &G, _ll cur, _ll par, _ll d) {
-            dist[cur] = d;
-            parent[0][cur] = par;
-            for(auto e : G[cur]) if(e != par) dfs(G, e, cur, d+1);
-        }
-
-        lca(std::vector<std::vector<edge>> &G, _ll root = 0) {
-            _ll n = G.size();
-            _ll k = 1;
-            while((1LL<<k) < n) k++;
-            parent.resize(k+1, std::vector<_ll>(n, -1));
-            dist.resize(n, -1);
-            dfs(G, root, -1, 0);
-            for(_ll i = 0; i < k; i++) {
-                for(_ll j = 0; j < n; j++) {
-                    if(parent[i][j] == -1) parent[i+1][j] = -1;
-                    else parent[i+1][j] = parent[i][parent[i][j]];
-                }
+// Reference: https://algo-logic.info/lca/
+template<class T = int>
+struct lca {
+public: 
+    void dfs(std::vector<std::vector<T>> &G, int cur, int par, int d) {
+        dist[cur] = d;
+        parent[0][cur] = par;
+        for(auto e : G[cur]) if(e != par) dfs(G, e, cur, d+1);
+    }
+    lca(std::vector<std::vector<T>> &G, int root = 0) {
+        int n = G.size();
+        int k = 1;
+        while((1LL<<k) < n) k++;
+        parent.resize(k+1, std::vector<int>(n, -1));
+        dist.resize(n, -1);
+        dfs(G, root, -1, 0);
+        for(int i = 0; i < k; i++) {
+            for(int j = 0; j < n; j++) {
+                if(parent[i][j] == -1) parent[i+1][j] = -1;
+                else parent[i+1][j] = parent[i][parent[i][j]];
             }
-        }
-
-        _ll get_lca(_ll u, _ll v) {
-            if(dist[u] < dist[v]) std::swap(u, v);
-            _ll sz = parent.size();
-            for(_ll i = 0; i < sz; i++) {
-                _ll d = dist[u] - dist[v];
-                if((d >> i) & 1LL) u = parent[i][u];
-            }
-            if(u == v) return u;
-            for(_ll i = sz-1; i >= 0; i--) {
-                if(parent[i][u] != parent[i][v]) {
-                    u = parent[i][u];
-                    v = parent[i][v];
-                }
-            }
-            return parent[0][u];
-        }
-
-        _ll get_dist(_ll u, _ll v) {
-            return dist[u] + dist[v] - 2 * dist[get_lca(u, v)];
-        }
-
-        /* If there is the node "a" on the path from u to v */
-        bool is_on_path(_ll u, _ll v, _ll a) {
-            return (get_dist(u, a) + get_dist(a, v) == get_dist(u, v));
-        }
-
-    } lca;
-
-}
-/*---------------------　ここまで ------------------------*/
-
-
-using namespace std;
-using ll = long long;
-
-int main() {
-    ll n;
-    cin >> n;
-    vector<vector<ll>> G(n);
-    for(ll i = 0; i < n; i++) {
-        ll k; cin >> k;
-        for(ll j = 0; j < k; j++) {
-            ll c; cin >> c;
-            G[i].push_back(c);
         }
     }
-    lca::lca t(G);
-    ll q;
-    cin >> q;
-    for(ll i = 0; i < q; i++) {
-        ll u, v;
-        cin >> u >> v;
-        cout << t.get_lca(u, v) << endl;
+    int get_lca(int u, int v) {
+        if(dist[u] < dist[v]) std::swap(u, v);
+        int sz = parent.size();
+        for(int i = 0; i < sz; i++) {
+            int d = dist[u] - dist[v];
+            if((d >> i) & 1LL) u = parent[i][u];
+        }
+        if(u == v) return u;
+        for(int i = sz-1; i >= 0; i--) {
+            if(parent[i][u] != parent[i][v]) {
+                u = parent[i][u];
+                v = parent[i][v];
+            }
+        }
+        return parent[0][u];
+    }
+    int get_dist(int u, int v) {
+        return dist[u] + dist[v] - 2 * dist[get_lca(u, v)];
+    }
+    /* If there is the node "a" on the path from u to v */
+    bool is_on_path(int u, int v, int a) {
+        return (get_dist(u, a) + get_dist(a, v) == get_dist(u, v));
+    }
+
+private:
+    std::vector<std::vector<int>> parent;
+    std::vector<int> dist;
+};
+
+int main() {
+    int n, q;
+    std::cin >> n >> q;
+    std::vector<int> p(n-1);
+    std::vector<std::vector<int>> G(n);
+    for(int i = 1; i < n; i++) std::cin >> p[i];
+    for(int i = 1; i < n; i++) G[p[i]].push_back(i);
+    lca t(G);
+    for(int i = 0; i < q; i++) {
+        int u, v;
+        std::cin >> u >> v;
+        std::cout << t.get_lca(u, v) << "\n";
     }
     return 0;
 }
