@@ -6,6 +6,7 @@ Libraries for competitive programming
 - kruskal
 - lca
 - centroid
+- maximum_independent_set
 
 ## math
 - osa_k
@@ -13,4 +14,9 @@ Libraries for competitive programming
 - matrix
 - poly
 
+# data_structure
+- union find
+
 ## utils
+- gentemp
+- aclopen
