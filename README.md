@@ -7,6 +7,7 @@ Libraries for competitive programming
 - lca
 - centroid
 - maximum_independent_set
+- warshall_floyd
 
 ## math
 - osa_k
@@ -14,7 +15,7 @@ Libraries for competitive programming
 - matrix
 - poly
 
-# data_structure
+## data_structure
 - union find
 
 ## utils
