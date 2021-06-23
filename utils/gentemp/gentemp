@@ -5,7 +5,7 @@ src=/path/to/template.cpp
 
 if [ $# -eq 1 ]; then
     if [ $1 = "--help" ]; then
-        echo "mktemp <directory name>"
+        echo "gentemp <directory name>"
         exit
     else
         name=$1
