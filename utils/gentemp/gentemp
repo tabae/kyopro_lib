@@ -1,7 +1,7 @@
 #!/bin/bash
 
 name=generated_template_dir
-src=/mnt/c/Users/Ebata/OneDrive/競プロ/template.cpp
+src=/path/to/template.cpp
 
 if [ $# -eq 1 ]; then
     if [ $1 = "--help" ]; then
