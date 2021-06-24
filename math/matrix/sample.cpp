@@ -1,27 +1,27 @@
-#include <bits/stdc++.h>
-using namespace std;
-using ll = long long;
-#define rep(i, srt, end) for (long long i = (srt); i < (long long)(end); i++)
+#include <vector>
+#include <algorithm>
+#include <cassert>
+#include <iostream>
 
-namespace mat {
+namespace mm {
  
-    template <class T> using matrix = vector<vector<T>>;
+    template <class T> using matrix = std::vector<std::vector<T>>;
 
     template <class T> 
     matrix<T> E(int n) {
-        matrix<T> res(n, vector<T>(n, 0));
-        rep(i, 0, n) res[i][i] = 1;
+        matrix<T> res(n, std::vector<T>(n, 0));
+        for(int i = 0; i < n; i++) res[i][i] = 1;
         return res;
     }
 
     template <class T> 
     matrix<T> matMul(matrix<T> a, matrix<T> b) {
         assert(a.size() && b.size());
-        assert(a.size() == b[0].size() && a[0].size() == b.size());
-        matrix<T> res(a.size(), vector<T>(b.size(), 0));
-        rep(i, 0, a.size()) {
-            rep(j, 0, b.size()) {
-                rep(k, 0, b.size()) {
+        assert(a[0].size() == b.size());
+        matrix<T> res(a.size(), std::vector<T>(b[0].size(), 0));
+        for(int i = 0; i < a.size(); i++) {
+            for(int j = 0; j < b[0].size(); j++) {
+                for(int k = 0; k < b.size(); k++) {
                     res[i][j] += a[i][k] * b[k][j];
                 }
             }
@@ -30,12 +30,12 @@ namespace mat {
     }
  
     template <class T> 
-    vector<T> vecMul(matrix<T> a, vector<T> b) {
+    std::vector<T> vecMul(matrix<T> a, std::vector<T> b) {
         assert(a.size() && b.size());
         assert(a[0].size() == b.size());
-        vector<T> res(b.size(), 0);
-        rep(i, 0, a.size()) {
-            rep(j, 0, b.size()) {
+        std::vector<T> res(b.size(), 0);
+        for(int i = 0; i < a.size(); i++) {
+            for(int j = 0; j < b.size(); j++) {
                 res[i] += a[i][j] * b[j];
             }
         }
@@ -43,10 +43,10 @@ namespace mat {
     }
 
     template <class T> 
-    matrix<T> matPow(matrix<T> a, ll p) {
+    matrix<T> matPow(matrix<T> a, long long p) {
         assert(a.size() && a.size() == a[0].size());
-        matrix<T> res(a.size(), vector<T>(a.size(), 0));
-        rep(i, 0, a.size()) res[i][i] = 1;
+        matrix<T> res(a.size(), std::vector<T>(a.size(), 0));
+        for(int i = 0; i < a.size(); i++) res[i][i] = 1;
         while(p) {
             if(p & 1) res = matMul(res, a);
             a = matMul(a, a);
@@ -57,23 +57,29 @@ namespace mat {
  
 }
 
-using namespace mat;
+using namespace mm;
 
-void solve() {
-    ll n;
-    cin >> n;
-    if(n <= 1) cout << 1 << endl;
-    else {
-        matrix<ll> a = {{1,1}, {1,0}};    
-        auto p = matPow(a, n-1);
-        auto res = vecMul(p, {1,1});
-        cout << res[0] << endl;
-    }
-}
+#include <atcoder/modint>
+using mint = atcoder::modint998244353;
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    solve();
+    int n, m, k;
+    std::cin >> n >> m >> k;
+    matrix<mint> a(n, std::vector<mint>(m));
+    matrix<mint> b(m, std::vector<mint>(k));
+    for(int i = 0; i < n; i++) for(int j = 0; j < m; j++) {
+        int val; 
+        std::cin >> val;
+        a[i][j] = val;
+    }
+    for(int i = 0; i < m; i++) for(int j = 0; j < k; j++) {
+        int val;
+        std::cin >> val;
+        b[i][j] = val;
+    }
+    auto c = matMul(a, b);
+    for(int i = 0; i < n; i++) for(int j = 0; j < k; j++) {
+        std::cout << c[i][j].val() << (j == k-1 ? "\n" : " ");
+    }
     return 0;
 }
