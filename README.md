@@ -1,23 +1,42 @@
 # kyopro_lib
 Libraries for competitive programming
 
+## data_structure
+- union find
+
+## geometry
+- geo
+- gradient
+
 ## graph
+- centroid
 - dijkstra
 - kruskal
 - lca
-- centroid
 - maximum_independent_set
 - warshall_floyd
 
 ## math
-- osa_k
-- mod_utils
+- is_prime
+- isqrt
 - matrix
+- modulo
+- normal_comb
+- ofop
+- osa_k
 - poly
+- prime_factorize
+- yakusu
 
-## data_structure
-- union find
+# others
+- rotate
 
-## utils
+## scripts
 - gentemp
 - aclopen
+
+## string
+- biop
+- run_length_encoding
+- split
+- str2dec
