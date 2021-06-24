@@ -17,9 +17,6 @@ N個の整数a_1, a_2, ..., a_nを素因数分解せよ．
 vector<pair<int,int>> v = osa_k::prime_factorize(n);
 ```
 
-## コンストラクタ
-- エラトステネスの篩で最小の素因数を列挙
-
 ## osa_k::prime_factorize
 ```
 vector<pair<int,int>> osa_k::prime_factorize(int n);
