@@ -28,7 +28,7 @@ Libraries for competitive programming
 - prime_factorize
 - yakusu
 
-# others
+## others
 - rotate
 
 ## scripts
