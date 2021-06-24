@@ -1,66 +1,76 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cassert>
 
-/* --------- ここから --------- */
-struct osa_k {
-    using _ll = long long;
+namespace osa_k {
 
-    #define PRIME_FACTORIZE_MAX 2000010
-    vector<_ll> primes;
-
-    osa_k() {
-        primes.resize((PRIME_FACTORIZE_MAX));
-        for(_ll i = 0; i < PRIME_FACTORIZE_MAX; i++) {
-            primes[i] = 1;
-        }
-        for(_ll i = 2; i < PRIME_FACTORIZE_MAX; i++) {
-            if(primes[i] != 1) continue;
-            for(_ll j = i; j <= PRIME_FACTORIZE_MAX; j += i) {
-                primes[j] = i;
+    using ll = long long;
+    constexpr int max_size = 2020202; // 2 * 10^6
+    
+    struct min_factor_table {
+    public:
+        min_factor_table() {
+            min_factor.resize(max_size, 1);
+            for(int i = 2; i < max_size; i++) {
+                if(min_factor[i] != 1) continue;
+                for(int j = i; j < max_size; j += i) {
+                    if(min_factor[j] != 1) continue;
+                    min_factor[j] = i;
+                }
             }
         }
-    }
-
-    vector<pair<_ll,_ll>> factorize(_ll n){
-        vector<pair<_ll,_ll>> res;
-        while(n != 1) {
-            _ll cur = primes[n];
-            _ll cnt = 0;
-            while(n % cur == 0) {
-                n /= cur;
-                cnt++;
+        std::vector<std::pair<int, int>> prime_factorize(int n) {
+            assert(n < max_size);
+            std::vector<std::pair<int, int>> res;
+            while(n != 1) {
+                int fact = min_factor[n];
+                int count = 0;
+                while(n % fact == 0) {
+                    n /= fact;
+                    count++;
+                }
+                res.emplace_back(fact, count);
             }
-            res.push_back({cur, cnt});
+            sort(res.begin(), res.end());
+            return res;
         }
-        reverse(res.begin(), res.end());
-        return res;
-    }
-} osa_k;
+    private:
+        std::vector<int> min_factor;
+    } table;
 
-vector<pair<long long, long long>>factorize(long long n) {
-    return osa_k.factorize(n);
+    template<class T = int>
+    std::vector<std::pair<int, int>> prime_factorize(T n) {
+        return table.prime_factorize(n);
+    } 
+    
 }
-/* --------- ここまで --------- */
+
+#include <numeric>
 
 int main() {
-
     int n;
-    cin >> n;
-    vector<int> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
-
-    for(int i = 0; i < n; i++) {
-
-        // a[i]を素因数分解
-        auto v = factorize(a[i]);
-
-        // 素因数分解結果を表示
-        cout << a[i] << " = ";
-        int len = v.size();
-        for(int j = 0; j < len; j++) {
-            cout << v[j].first << "^" << v[j].second << (j == len-1 ? "\n" : " + ");
+    std::cin >> n;
+    std::vector<int> a(n);
+    for(int i = 0; i < n; i++) std::cin >> a[i];
+    bool pairwise = true, setwise;
+    std::vector<bool> seen(2020202, false);
+    for(auto e : a) {
+        auto v = osa_k::prime_factorize(e);
+        for(auto [f, s] : v) {
+            if(seen[f]) {
+                pairwise = false;
+                break;
+            }
+            seen[f] = true;
         }
+        if(!pairwise) break;
     }
-
+    int g = 0;
+    for(auto e : a) g = std::gcd(g, e);
+    setwise = g == 1;
+    if(pairwise) std::cout << "pairwise coprime" << std::endl;
+    else if(setwise) std::cout << "setwise coprime" << std::endl;
+    else std::cout  << "not coprime" << std::endl;
     return 0;
 }

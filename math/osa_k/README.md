@@ -8,23 +8,24 @@ N個の整数a_1, a_2, ..., a_nを素因数分解せよ．
 - 2 <= n <= 10^6
 - 1 <= a_i <= 10^6
 
-## 計算量
+### 計算量
 - 前処理 O(max(a) log log max(a))
 - クエリ O(log a_i)
 
 ## 使い方
-
-### 前処理
-- `PRIME_FACTORIZE_MAX`に最大値+1を設定
-
-### クエリ
-- `factorize(N)`で`N`を素因数分解する．
-- 結果は`pair<long long, long long>`の`vector`で返ってくる (first ^ second).
 ```
-vector<pair<long long, long long>> v = factorize(a[i]);
+vector<pair<int,int>> v = osa_k::prime_factorize(n);
 ```
 
-## サンプルコード
+## コンストラクタ
+- エラトステネスの篩で最小の素因数を列挙
 
-- サンプル: ./sample.cpp
-- ABC177 - E Coprime: ./abc177_e.cpp
+## osa_k::prime_factorize
+```
+vector<pair<int,int>> osa_k::prime_factorize(int n);
+```
+- `n`を素因数分解する．
+- 素因数をキーに昇順でソートされている
+
+## Verify
+- https://atcoder.jp/contests/abc177/submissions/23705983
