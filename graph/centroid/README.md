@@ -6,16 +6,10 @@
 
 ## 使い方
 ```
-auto v = find_centroids(G, n);
+auto v = centroid::find(G);
 ```
-- v : 重心のインデックス
-    - vector<long long>
-
 - G : 隣接リスト
     - vector<vector<long long>>
 
-- n : 頂点数
-    - long long
-
-## Sample
+## Verify
 - sample.cpp : Codeforces Div2.670 C

@@ -1,53 +1,53 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <vector>
+#include <algorithm>
+#include <iostream>
 
-/*-------------ここから---------------*/
-using _ll = long long;
-vector<_ll> _max_subtree, _sum_subtree;
-_ll _centroid1(vector<vector<_ll>>& G, _ll cur, _ll par, _ll N) {
-    _ll mx = 0, sum = 0;
-    for(auto g : G[cur]) {
-        if(g == par) continue;
-        _ll tmp = _centroid1(G, g, cur, N);
-        sum += tmp;
-        mx = max(mx, tmp);
+namespace centroid {
+    
+    using ll = long long;
+    
+    ll dfs(std::vector<std::vector<ll>>& G, std::vector<ll>& max_subtree, ll cur, ll par, ll n) {
+        ll mx = 0, sum = 0;
+        for(auto g : G[cur]) {
+            if(g == par) continue;
+            ll tmp = dfs(G, max_subtree, g, cur, n);
+            sum += tmp;
+            mx = std::max(mx, tmp);
+        }
+        mx = std::max(mx, n - sum - 1);
+        max_subtree[cur] = mx;
+        return sum + 1;
     }
-    mx = max(mx, N - sum - 1);
-    _max_subtree[cur] = mx;
-    _sum_subtree[cur] = sum;
-    return sum + 1;
+
+    std::vector<ll> find(std::vector<std::vector<ll>>& G) {
+        ll n = G.size();
+        std::vector<ll> max_subtree(n, 0);
+        dfs(G, max_subtree, 0, -1, n);
+        std::vector<ll> res;
+        ll mn = *min_element(max_subtree.begin(), max_subtree.end());
+        for(ll i = 0; i < n; i++) if(max_subtree[i] == mn) res.push_back(i);
+        return res;
+    }
+
 }
-vector<_ll> _centroid2(_ll N) {
-    vector<_ll> res;
-    _ll mn = 1LL<<60;
-    for(_ll i = 0; i < N; i++) mn = min(mn, _max_subtree[i]);
-    for(_ll i = 0; i < N; i++) if(_max_subtree[i] == mn) res.push_back(i);
-    return res;
-}
-vector<_ll> find_centroids(vector<vector<_ll>>& G, _ll N) {
-    _max_subtree = vector<_ll>(N, 0);
-    _sum_subtree = vector<_ll>(N, 0);
-    _centroid1(G, 0, -1, N);
-    return _centroid2(N);
-}
-/*-------------ここまで---------------*/
+
 
 using ll = long long;
 
 void solve() {
     ll n;
-    cin >> n;
-    vector<vector<ll>> G(n);
+    std::cin >> n;
+    std::vector<std::vector<ll>> G(n);
     for(ll i = 0; i < n-1; i++) {
         ll u, v;
-        cin >> u >> v;
+        std::cin >> u >> v;
         u--; v--;
         G[u].push_back(v);
         G[v].push_back(u);
     }
-    auto v = find_centroids(G, n);
+    auto v = centroid::find(G);
     if(v.size() == 1) {
-        for(ll i = 0; i < 2; i++) cout << 1 << " " << G[0][0]+1 << endl;
+        for(ll i = 0; i < 2; i++) std::cout << 1 << " " << G[0][0]+1 << std::endl;
         return;
     }
     ll cut;
@@ -56,13 +56,13 @@ void solve() {
         cut = g;
         break;
     }
-    cout << v[1]+1 << " " << cut+1 << endl;
-    cout << v[0]+1 << " " << cut+1 << endl; 
+    std::cout << v[1]+1 << " " << cut+1 << std::endl;
+    std::cout << v[0]+1 << " " << cut+1 << std::endl; 
 }
 
 int main() {
     ll t;
-    cin >> t;
+    std::cin >> t;
     while(t--) solve();
     return 0;
 }
