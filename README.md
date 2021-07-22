@@ -14,6 +14,7 @@ Libraries for competitive programming
 - kruskal
 - lca
 - maximum_independent_set
+- tree_diameter
 - warshall_floyd
 
 ## math
