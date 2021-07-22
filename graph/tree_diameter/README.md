@@ -15,7 +15,7 @@ ll tree_diameter::len(vector<vector<pair<ll,ll>>> G);
 vector<ll> tree_diameter::path(vector<vector<ll>> G)
 vector<ll> tree_diameter::path(vector<vector<pair<ll,ll>>> G)
 ```
-- 木の最長頂点対の最短経路を求める
+- 木の最遠頂点対の最短経路を求める
 
 ## Verify
 - https://judge.yosupo.jp/submission/53793
