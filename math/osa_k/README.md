@@ -24,5 +24,11 @@ vector<pair<int,int>> osa_k::prime_factorize(int n);
 - `n`を素因数分解する．
 - 素因数をキーに昇順でソートされている
 
+## osa_k::mebious
+```
+int osa_k::mebious(int n);
+```
+- メビウス関数の値を返す．
+
 ## Verify
 - https://atcoder.jp/contests/abc177/submissions/23705983
