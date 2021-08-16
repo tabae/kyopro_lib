@@ -5,7 +5,6 @@
 
 namespace osa_k {
 
-    using ll = long long;
     constexpr int max_size = 2020202; // 2 * 10^6
     
     struct min_factor_table {
@@ -35,14 +34,31 @@ namespace osa_k {
             sort(res.begin(), res.end());
             return res;
         }
+        int mebious(int n) {
+            assert(n < max_size);
+            int num = 0;
+            while(n != 1) {
+                num++;
+                int fact = min_factor[n];
+                int count = 0;
+                while(n % fact == 0) {
+                    n /= fact;
+                    count++;
+                }
+                if(count >= 2) return 0;
+            }
+            return (num % 2 == 0 ? 1 : -1);
+        }
     private:
         std::vector<int> min_factor;
     } table;
 
-    template<class T = int>
-    std::vector<std::pair<int, int>> prime_factorize(T n) {
+    std::vector<std::pair<int, int>> prime_factorize(int n) {
         return table.prime_factorize(n);
     } 
+    int mebious(int n) {
+        return table.mebious(n);
+    }
     
 }
 
