@@ -1,17 +1,16 @@
 #include <iostream>
-#include <cmath>
 
-// return such maximum x that x^2 <= n 
+// return maximum x such that x^2 <= n
+// requirements: n <= 4e18 
 long long isqrt(long long n) {
     long long res;
-    double r = std::sqrt(n);
-    for(long long i = std::max<long long>(0, r - 10); i < r + 10; i++) {
-        if(i * i > n) {
-            res = i - 1;
-            break;
-        }
+    long long l = 0, r = 2000000001;
+    while(r - l > 1) {
+        long long m = l + (r - l) / 2;
+        if(m * m <= n) l = m;
+        else r = m;
     }
-    return res;
+    return l;
 }
 
 int main() {
