@@ -1,5 +1,0 @@
-#!/bin/bash
-
-acl_path=/path/to/ac-library
-export CPLUS_INCLUDE_PATH=$acl_path
-python3 $acl_path/expander.py $1
