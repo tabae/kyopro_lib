@@ -19,3 +19,7 @@ graph/warshall_floyd/test/sample-2.in
 graph/warshall_floyd/test/sample-3.in
 math/matrix/combined.cpp
 math/osa_k/abc177_e.cpp
+scripts/aclopen/aclopen
+scripts/aclopen/README.md
+scripts/gentemp/gentemp
+scripts/gentemp/README.md
