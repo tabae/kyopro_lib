@@ -8,6 +8,7 @@
 
 ## data_structure
 - [union find （連結成分管理）](https://github.com/tabae/kyopro_lib/tree/master/data_structure/union_find)
+- [heap (ヒープ)](https://github.com/tabae/kyopro_lib/tree/master/data_structure/heap)
 
 ## geometry
 - [geo （幾何ライブラリ，整備中）](https://github.com/tabae/kyopro_lib/tree/master/geometry/geo)
