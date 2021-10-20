@@ -38,10 +38,6 @@
 ## others
 - [rotate （行列回転）](https://github.com/tabae/kyopro_lib/tree/master/others/rotate)
 
-## scripts
-- [gentemp](https://github.com/tabae/kyopro_lib/tree/master/scripts/aclopen)
-- [aclopen](https://github.com/tabae/kyopro_lib/tree/master/scripts/gentemp)
-
 ## string
 - [biop （文字列二項演算）](https://github.com/tabae/kyopro_lib/tree/master/string/biop)
 - [run_length_encoding （ランレングス圧縮）](https://github.com/tabae/kyopro_lib/tree/master/string/run_length_encoding)
