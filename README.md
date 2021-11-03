@@ -12,7 +12,6 @@
 
 ## geometry
 - [geo （幾何ライブラリ，整備中）](https://github.com/tabae/kyopro_lib/tree/master/geometry/geo)
-- [gradient （2点の傾き管理）](https://github.com/tabae/kyopro_lib/tree/master/geometry/gradient)
 
 ## graph
 - [centroid （木の重心）](https://github.com/tabae/kyopro_lib/tree/master/graph/centroid)
@@ -33,6 +32,7 @@
 - [osa_k（高速素因数分解，osa_k法）](https://github.com/tabae/kyopro_lib/tree/master/math/osa_k)
 - [poly （多項式演算）](https://github.com/tabae/kyopro_lib/tree/master/math/poly)
 - [prime_factorize （素因数分解，試し割り法）](https://github.com/tabae/kyopro_lib/tree/master/math/prime_factorize)
+- [rational （有理数ライブラリ）](https://github.com/tabae/kyopro_lib/tree/master/math/rational)
 - [yakusu（約数列挙，試し割り法）](https://github.com/tabae/kyopro_lib/tree/master/math/yakusu)
 
 ## others
