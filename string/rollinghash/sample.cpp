@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <set>
 
+
+
 struct rollinghash {
     using u64 = unsigned long long;
     using u128 = __uint128_t;
@@ -18,7 +20,7 @@ struct rollinghash {
     };
     rollinghash(std::string s) {
         std::random_device seed_gen;
-        std::mt19937 engine;
+        std::mt19937 engine(seed_gen());
         const u64 base = engine() % 326 + 2;
         const int n = s.size();
         hash.resize(n+1, 0);

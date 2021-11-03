@@ -25,4 +25,4 @@ long long get(int l, int r);
 - 128bit整数サポート環境でしか動かないよ
 
 ## Verify
-- https://atcoder.jp/contests/abc141/submissions/27000039
+- https://atcoder.jp/contests/abc141/submissions/27000161
