@@ -3,12 +3,12 @@
 #include <cassert>
 #include <iostream>
 
-std::vector<std::pair<char, int>> run_length_encoding(const std::string& s) {
-    std::vector<std::pair<char, int>> res;
+std::vector<std::pair<char, long long>> run_length_encoding(const std::string& s) {
+    std::vector<std::pair<char, long long>> res;
     int n = s.size();
     char xev = -1;
     char prev = xev;
-    int cur = 1;
+    long long cur = 1;
     for(int i = 0; i < n; i++) {
         assert(s[i] != xev);
         if(prev == s[i]) cur++;
@@ -23,12 +23,12 @@ std::vector<std::pair<char, int>> run_length_encoding(const std::string& s) {
 }
 
 template<class T>
-std::vector<std::pair<T, int>> run_length_encoding(const std::vector<T>& s){
-    std::vector<std::pair<T, int>> res;
+std::vector<std::pair<T, long long>> run_length_encoding(const std::vector<T>& s){
+    std::vector<std::pair<T, long long>> res;
     int n = s.size();
     T xev = -1;
     T prev = xev;
-    int cur = 1;
+    long long cur = 1;
     for(int i = 0; i < n; i++) {
         assert(s[i] != xev);        
         if(prev == s[i]) cur++;
