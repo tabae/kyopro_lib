@@ -44,3 +44,4 @@
 - [split （文字列分割）](https://github.com/tabae/kyopro_lib/tree/master/string/split)
 - [str2dec （浮動小数点数→整数変換）](https://github.com/tabae/kyopro_lib/tree/master/string/str2dec)
 - [rollinghash （ローリングハッシュ）](https://github.com/tabae/kyopro_lib/tree/master/string/rollinghash)
+- [zfill （ゼロ埋め）](https://github.com/tabae/kyopro_lib/tree/master/string/zfill)
